@@ -14,6 +14,8 @@ substitution with a single regex.
 
 import re
 
+PII_FIELDS = ("name", "email", "phone", "ssn", "password", "ip")
+
 
 def filter_datum(fields, redaction, message, separator):
     """returns the log message obfuscated"""
