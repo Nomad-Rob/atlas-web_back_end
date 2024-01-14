@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """Update the class to accept a list of strings fields
-constructor argument. Implement the format method to 
+constructor argument. Implement the format method to
 filter values in incoming log records using filter_datum.
 Values for fields in fields should be filtered
 Do NOT extrapolate FORMAT manually. The format method
@@ -22,7 +22,7 @@ def filter_datum(fields: List[str], redaction: str,
 
 
 class RedactingFormatter(logging.Formatter):
-    """ Redacting Formatter class """
+    """ Redacting Formatter class that inherits from logging.Formatter """
 
     REDACTION = "***"
     FORMAT = "[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s"
