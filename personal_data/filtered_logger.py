@@ -29,10 +29,12 @@ class RedactingFormatter(logging.Formatter):
     SEPARATOR = ";"
 
     def __init__(self, fields: List[str]):
+        """ constructor method for RedactingFormatter class"""
         super(RedactingFormatter, self).__init__(self.FORMAT)
         self.fields = fields
 
     def format(self, record: logging.LogRecord) -> str:
+        """ filter values in incoming log records using filter_datum"""
         original_message = record.getMessage()
         redacted_message = filter_datum(
             self.fields,
