@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 
-"""Update the class to accept a list of strings fields
-constructor argument. Implement the format method to
-filter values in incoming log records using filter_datum.
-Values for fields in fields should be filtered
-Do NOT extrapolate FORMAT manually. The format method
-should be less than 5 lines"""
+"""Implement a main function that takes no arguments and returns nothing.
+
+The function will obtain a database connection using get_db and retrieve
+all rows in the users table and display each row under a filtered format
+like this:"""
 
 from typing import List
 import logging
@@ -70,3 +69,31 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
         host=os.getenv('PERSONAL_DATA_DB_HOST', 'localhost'),
         database=os.getenv('PERSONAL_DATA_DB_NAME')
     )
+    
+    
+def main():
+    """read and filter data from database"""
+    logger = get_logger()
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM users;")
+    for row in rows:
+        dict_row = {
+            'name': row[0],
+            'email': row[1],
+            'phone': row[2],
+            'ssn': row[3],
+            'password': row[4],
+            'ip': row[5],
+            'last_login': row[6],
+            'user_agent': row[7]
+        }
+        
+        message = '; '.join([f'{key}={value}' for key, value in dict_row.items()])
+        logger.info(message)
+        
+    cursor.close()
+    db.close()
+    
+if __name__ == '__main__':
+    main()
