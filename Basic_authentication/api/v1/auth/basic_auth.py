@@ -9,7 +9,6 @@ from models.user import User
 import binascii
 
 
-
 class BasicAuth(Auth):
     """BasicAuth class"""
 
@@ -76,4 +75,3 @@ class BasicAuth(Auth):
         """current_user method"""
         auth_header = self.authorization_header(request)
         auth_header = self.extract_base64_authorization_header
-  
