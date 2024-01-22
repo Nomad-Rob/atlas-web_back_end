@@ -5,6 +5,7 @@
 
 from flask import request
 from typing import List, TypeVar
+from os import getenv
 
 
 class Auth:
@@ -36,4 +37,6 @@ class Auth:
         """Session cookie"""
         if request is None:
             return None
+        
+        session_name = getenv('SESSION_NAME', 'session_id')
         return request.cookies.get('session_id')
