@@ -7,6 +7,7 @@ from base64 import b64decode
 from typing import TypeVar
 from models.user import User
 import binascii
+import base64
 
 
 class BasicAuth(Auth):
