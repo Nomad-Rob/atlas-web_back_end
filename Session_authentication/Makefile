@@ -5,8 +5,8 @@
 # All commands start with make
 
 NAME="Rob Farley"
-IMAGE=nomadrob/basic_auth
-CONTAINER=project_container
+IMAGE=nomadrob/session_auth
+CONTAINER=project_session_auth
 TAG=latest
 
 # Builds a docker image for a development box with a image name, can change dev to project name
