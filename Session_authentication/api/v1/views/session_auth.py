@@ -2,9 +2,9 @@
 
 """Session authentication handles all routes for the Session authentication"""
 
-from models.user import User
-from flask import request, jsonify, abort, make_response
+from flask import jsonify, make_response, request, abort
 from api.v1.views import app_views
+from models.user import User
 import os
 
 
