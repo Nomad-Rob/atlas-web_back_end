@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """ Module of Index views
 """
-from flask import jsonify, abort
+from flask import jsonify, make_response, abort
 from api.v1.views import app_views
-
+from models.user import User
+import os
 
 @app_views.route('/status', methods=['GET'], strict_slashes=False)
 def status() -> str:
