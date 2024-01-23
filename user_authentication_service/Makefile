@@ -9,6 +9,10 @@ NAME="Rob Farley"
 IMAGE=nomadrob/user_authentication_service
 CONTAINER=user_auth_service
 TAG=latest
+PORT=5001
+
+HOST_DIRECTORY=./app
+CONTAINER_DIRECTORY=/app
 
 # Builds a docker image for a development box with an image name
 build:
@@ -19,7 +23,7 @@ build:
 # Feel free to add more ports as needed, (ex: docker run -d -p 2022:22 -p 9000:80 image name)
 # -v.:/app mounts the current directory to the /app directory in the container
 run:
-	@docker run -d --name ${CONTAINER} -p 5002:5002 -e API_HOST=0.0.0.0 -e API_PORT=5002 -v.:/app ${IMAGE}
+	@docker run -d --name ${CONTAINER} -p ${PORT} -e API_HOST=0.0.0.0 -e API_PORT=5001 -v ${HOST_DIRECTORY}:${CONTAINER_DIRECTORY} ${IMAGE}
 
 start:
 	@docker start ${IMAGE}
@@ -42,7 +46,8 @@ stop:
 
 # Remove all pycache files
 clean:
-	@find . -name \*.pyc -delete
+	docker stop ${CONTAINER}
+	docker rm ${CONTAINER}
   
 # Remove container and image
 remove:
