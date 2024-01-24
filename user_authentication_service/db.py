@@ -64,7 +64,7 @@ class DB:
             return user
         except (NoResultFound, InvalidRequestError) as error:
             raise error
-          
+
     def update_user(self, user_id: int, **kwargs) -> None:
         '''Takes arguments and updates user'''
         user = self.find_user_by(id=user_id)
@@ -75,4 +75,3 @@ class DB:
         session = self._session
         session.commit()
         return None
-      
