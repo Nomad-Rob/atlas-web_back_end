@@ -21,4 +21,4 @@ EXPOSE 5000
 # ENV API_PORT=5000
 
 # # Run the command to start your application/command starts your API server.
-CMD ["python3", "app.py"]
+# CMD ["python3", "app.py"]
