@@ -50,6 +50,7 @@ def login() -> str:
         abort(401)
 
 
+## Still need to fix this one
 @app.route('/sessions', methods=['DELETE'], strict_slashes=False)
 def logout() -> str:
     """ DELETE /sessions
@@ -60,8 +61,8 @@ def logout() -> str:
     user = AUTH.get_user_from_session_id(session_id)
     if user:
         AUTH.destroy_session(user.id)
-        response = redirect("/")
-        response.delete_cookie('session_id', "", expires=0)
-        return response
+        return redirect(url_for('/'))
     else:
         abort(403)
+
+
