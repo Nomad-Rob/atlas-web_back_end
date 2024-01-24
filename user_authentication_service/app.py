@@ -4,6 +4,8 @@
 
 from flask import Flask, jsonify, request, abort, redirect
 from auth import Auth
+from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy.exc import InvalidRequestError
 
 app = Flask(__name__)
 AUTH = Auth()
@@ -50,7 +52,7 @@ def login() -> str:
         abort(401)
 
 
-## Still need to fix this one
+# Still need to fix this one
 @app.route('/sessions', methods=['DELETE'], strict_slashes=False)
 def logout() -> str:
     """ DELETE /sessions

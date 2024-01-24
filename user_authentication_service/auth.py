@@ -80,5 +80,3 @@ class Auth():
             user.session_id = None
         except NoResultFound:
             return None
-
-    
