@@ -16,7 +16,7 @@ def hello_world() -> str:
       - the status of the API
     """
     return jsonify({"message": "Bienvenue"})
-  
+
 @app.route('/users', methods=['POST'], strict_slashes=False)
 def users() -> str:
     """ POST /users
