@@ -28,7 +28,7 @@ class TestAccessNestedMap(unittest.TestCase):
         """ Test access nested map function """
         with self.assertRaises(expected):
             access_nested_map(nested_map, path)
-    
+
 
 class TestGetJson(unittest.TestCase):
     """ Class for testing get json function """
