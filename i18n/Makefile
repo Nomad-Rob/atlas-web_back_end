@@ -6,13 +6,13 @@
 
 # Change these variables to match your project
 NAME="Rob Farley"
-IMAGE=nomadrob/bind_mount_test
-CONTAINER=bind_mount
+IMAGE=nomadrob/i18n_project
+CONTAINER=i18n
 TAG=latest
 PORT=5000
 
 HOST_DIRECTORY=./
-CONTAINER_DIRECTORY=/Docker
+CONTAINER_DIRECTORY=/i18n
 
 # Builds a docker image for a development box with an image name
 build:

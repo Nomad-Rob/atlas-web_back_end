@@ -10,20 +10,20 @@ FROM python:3.8
 
 # Set the working directory in the container to the directory where the code is
 # This is the directory where the code will be copied into
-WORKDIR /Docker
+WORKDIR /i18n
 
 # Copy the requirements file that you want to have set up for your environment
 # if you don't have a requirements file, you can remove this line
-COPY requirements.txt /Docker
+COPY requirements.txt /i18n
 
 # Install any needed packages specified in requirements.txt for the environment
 RUN pip3 install --no-cache-dir -r requirements.txt
 
 # Copy the directory contents into the container at /WhateverFolderNameYouWant
-COPY . /Docker
+COPY . /i18n
 
 # Change permissions of all files in the directory to be accessible by anyone
-RUN chmod -R 777 /Docker
+RUN chmod -R 777 /i18n
 
 # Make port 5000 available to the world outside this container
 EXPOSE 5000
