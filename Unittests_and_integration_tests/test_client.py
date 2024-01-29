@@ -35,13 +35,21 @@ class TestGithubOrgClient(unittest.TestCase):
 
     @patch('client.get_json')
     def test_public_repos(self, mock_get_json):
-        """Test GithubOrgClient.public_repos"""
-        mock_get_json.return_value = TEST_PAYLOAD
-        with patch('client.GithubOrgClient._public_repos_url',
-                   new_callable=PropertyMock) as mock_public_repos_url:
-            mock_public_repos_url.return_value = "http://testurl.com"
-            client = GithubOrgClient("test")
-            self.assertEqual(client.public_repos(), ['repo1', 'repo2'])
+        """ Test GithubOrgClient.public_repos """
+        mock_get_json.return_value = [
+            {"name": "repo1"},
+            {"name": "repo2"},
+        ]
+        with patch.object(
+            GithubOrgClient,
+            '_public_repos_url',
+            new_callable=PropertyMock
+        ) as mock_public_repos_url:
+            mock_public_repos_url.return_value = "www.yes.com"
+            test_class = GithubOrgClient("test")
+            result = test_class.public_repos()
+            self.assertEqual(result, ["repo1", "repo2"])
+            mock_public_repos_url.assert_called_once()
             mock_get_json.assert_called_once()
 
     @parameterized.expand([
@@ -52,7 +60,7 @@ class TestGithubOrgClient(unittest.TestCase):
         """Test GithubOrgClient.has_license"""
         self.assertEqual(GithubOrgClient.has_license(repo, license_key),
                          expected)
-        
+
 
 class TestIntegrationGithubOrgClient(unittest.TestCase):
     """Test class for GithubOrgClient.public_repos"""
