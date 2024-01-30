@@ -6,6 +6,7 @@ from flask_babel import Babel
 
 
 app = Flask(__name__)
+
 class Config:
     """Config class for Babel"""
     LANGUAGES = ["en", "fr"]
@@ -21,7 +22,7 @@ babel = Babel(app)
 @app.route('/', methods=['GET'], strict_slashes=False)
 def index():
     """GET method for index.html"""
-    return render_template('1-index.html')
+    return render_template('2-index.html')
 
 
 @babel.localeselector
