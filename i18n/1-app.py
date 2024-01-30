@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-"""Task 2"""
+"""Task 1"""
 from flask import Flask, render_template, request, g
 from flask_babel import Babel
 
