@@ -6,7 +6,7 @@ from flask_babel import Babel
 
 
 app = Flask(__name__)
-
+babel = Babel(app)
 
 class Config:
     """Config class for Babel"""
@@ -16,7 +16,11 @@ class Config:
 
 
 app.config.from_object(Config)
-babel = Babel(app)
+
+@app.before_request
+def before_request():
+    """Get user from request"""
+    g.user = get_user()
 
 
 users = {
