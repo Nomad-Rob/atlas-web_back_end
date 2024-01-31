@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Script to install Python dependencies from requirements.txt
+
+# Check if requirements.txt exists
+if [ -f "requirements.txt" ]; then
+    echo "Installing Python dependencies..."
+    pip install -r requirements.txt
+    echo "Dependencies installed successfully."
+else
+    echo "requirements.txt not found. Please make sure the file exists in the project directory."
+fi
