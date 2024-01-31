@@ -2,7 +2,7 @@
 
 """Task 6"""
 from flask import Flask, render_template, request, g
-from flask_babel import Babel
+from flask_babel import Babel, _
 
 
 app = Flask(__name__)
