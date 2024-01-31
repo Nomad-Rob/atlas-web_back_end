@@ -8,6 +8,7 @@ from flask_babel import Babel
 app = Flask(__name__)
 babel = Babel(app)
 
+
 class Config:
     """Config class for Babel"""
     LANGUAGES = ["en", "fr"]
@@ -16,6 +17,7 @@ class Config:
 
 
 app.config.from_object(Config)
+
 
 @app.before_request
 def before_request():
