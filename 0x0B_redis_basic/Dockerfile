@@ -66,7 +66,7 @@ RUN pip3 install requests
 RUN pip3 install beautifulsoup4
 
 # bcrypt
-RUN pip3 install bcrypt
+#RUN pip3 install bcrypt
 
 # MySQL connector
 RUN pip3 install mysql-connector-python
@@ -91,3 +91,6 @@ RUN locale-gen en_US.UTF-8
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
+
+# Keep the container running indef 
+CMD ["tail", "-f", "/dev/null"]
