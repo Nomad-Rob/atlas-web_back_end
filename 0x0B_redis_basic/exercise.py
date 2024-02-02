@@ -7,7 +7,7 @@ from typing import Union, Callable
 from functools import wraps
 
 
-def count_calls(method: Callable[..., Union[str, bytes, int, float]])-> Callable[..., Union[str, bytes, int, float]]:
+def count_calls(method: Callable[..., Union[str, bytes, int, float]]) -> Callable[..., Union[str, bytes, int, float]]:
     """Decorator function that counts how many times a function is called"""
     @wraps(method)
     def wrapper(self, *args, **kwargs):
@@ -31,7 +31,7 @@ class Cache:
         self._redis.set(key, data)
         return key
 
-    def get(self, key: str, fn: Callable = None) -> Union[str, bytes, int, float]:
+    def get(self, key: str, fn: Callable[..., Union[str, bytes, int, float]] = None) -> Union[str, bytes, int, float]:
         """Get method that takes a key string and an optional callable"""
         data = self._redis.get(key)
         if fn:
@@ -45,3 +45,4 @@ class Cache:
     def get_int(self, data: bytes) -> int:
         """Convert bytes to int method"""
         return int.from_bytes(data, byteorder='big')
+
