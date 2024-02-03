@@ -18,7 +18,7 @@ def count_calls(method: Callable) -> Callable:
 
 
 def call_history(method: Callable) -> Callable:
-    """Decorator that stores the history of inputs and outputs for a function"""
+    """Decorator that stores the history of inputs& outputs for a function"""
     @wraps(method)
     def wrapper(self, *args, **kwargs):
         """Wrapper function"""
@@ -61,7 +61,8 @@ class Cache:
         self._redis.set(key, data)
         return key
 
-    def get(self, key: str, fn: Callable = None) -> Union[str, bytes, int, float]:
+    def get(self, key: str, fn: Callable = None) -> Union[str,
+                                                          bytes, int, float]:
         """Get data from cache"""
         data = self._redis.get(key)
         if fn:
