@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# Create SQL files with empty content
+
+# 0. Uniq Users
+touch 0-uniq_users.sql
+
+# 1. Country Users
+touch 1-country_users.sql
+
+# 2. Fans
+touch 2-fans.sql
+
+# 3. Glam Rock
+touch 3-glam_rock.sql
+
+# 4. Store
+touch 4-store.sql
+
+# 5. Valid Email
+touch 5-valid_email.sql
+
+# 6. Bonus
+touch 6-bonus.sql
+
+# 7. Average Score
+touch 7-average_score.sql
+
+# 8. Index Name First
+touch 8-index_name_first.sql
+
+# 9. Index Name Score
+touch 9-index_name_score.sql
+
+# 10. Safe Div
+touch 10-div.sql
+
+# 11. Need Meeting
+touch 11-need_meeting.sql
+
+echo "SQL files created successfully."
