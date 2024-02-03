@@ -1,10 +1,10 @@
 # Makefile for Docker
 
 # Variables
-DOCKER_IMAGE_NAME = redis_basic
-DOCKER_CONTAINER_NAME = redis_basic_container
+DOCKER_IMAGE_NAME = mysql_advanced
+DOCKER_CONTAINER_NAME = mysql_advanced_container
 HOST_DIRECTORY=./
-CONTAINER_DIRECTORY=/0x0B_redis_basic
+CONTAINER_DIRECTORY=/MySQL_Advanced
 .PHONY: build run exec stop clean
 
 # Build the Docker image
