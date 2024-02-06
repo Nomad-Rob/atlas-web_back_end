@@ -92,5 +92,6 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
+RUN chmod -R 777 /0x0B_redis_basic
 # Keep the container running indef 
 CMD ["tail", "-f", "/dev/null"]
