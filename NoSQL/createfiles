@@ -1,0 +1,14 @@
+#!/bin/bash
+touch 0-list_databases
+touch 1-use_or_create_database
+touch 2-insert
+touch 3-all
+touch 4-match
+touch 5-count
+touch 6-update
+touch 7-delete
+touch 8-all.py
+touch 9-insert_school.py
+touch 10-update_topics.py
+touch 11-schools_by_topic.py
+touch 12-log_stats.py
