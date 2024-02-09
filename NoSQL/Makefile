@@ -1,10 +1,11 @@
 # Makefile for Docker
 
 # Variables
-DOCKER_IMAGE_NAME = nosql
-DOCKER_CONTAINER_NAME = nosql_container
-HOST_DIRECTORY=./
-CONTAINER_DIRECTORY=/NoSQL
+# Variables
+DOCKER_IMAGE_NAME := nosql
+DOCKER_CONTAINER_NAME := nosql_container
+HOST_DIRECTORY := $(shell pwd)
+CONTAINER_DIRECTORY := /NoSQL
 .PHONY: build run exec stop clean
 
 # Build the Docker image
