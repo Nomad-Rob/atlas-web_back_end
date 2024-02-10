@@ -1,100 +1,37 @@
+# Use Ubuntu 18.04 as the base image
 FROM ubuntu:18.04
 
-RUN apt-get update
-RUN apt-get -y upgrade
-# curl/wget/git
-RUN apt-get install -y curl wget git tar
-# vim/emacs
-RUN apt-get install -y vim emacs
-# C
-RUN apt-get install -y build-essential gcc
+# Set environment variables to avoid user interaction during installation
+ENV DEBIAN_FRONTEND=noninteractive
 
-# MySQL
-RUN echo "mysql-community-server mysql-community-server/data-dir select ''" | debconf-set-selections
-RUN echo "mysql-community-server mysql-community-server/root-pass password root" | debconf-set-selections
-RUN echo "mysql-community-server mysql-community-server/re-root-pass password root" | debconf-set-selections
-RUN echo "mysql-server-5.7 mysql-server/root_password password root" | debconf-set-selections
-RUN echo "mysql-server-5.7 mysql-server/root_password_again password root" | debconf-set-selections
-RUN apt-get install -y --force-yes mysql-server-5.7
-RUN apt-get install -y --force-yes libmysqlclient-dev
+# Install MongoDB
+RUN apt-get update && apt-get install -y wget gnupg \
+    && wget -qO - https://www.mongodb.org/static/pgp/server-4.2.asc | apt-key add - \
+    && echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.2 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-4.2.list \
+    && apt-get update \
+    && apt-get install -y mongodb-org
 
-# Python
-RUN apt install -y build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev libsqlite3-dev
-RUN cd /usr/src ; wget https://www.python.org/ftp/python/3.7.3/Python-3.7.3.tar.xz ; tar -xf Python-3.7.3.tar.xz ; cd Python-3.7.3 ; ./configure ; make altinstall
+# Install Python 3.7 and pip
+RUN apt-get install -y software-properties-common \
+    && add-apt-repository ppa:deadsnakes/ppa \
+    && apt-get update \
+    && apt-get install -y python3.7 python3-pip \
+    && python3.7 -m pip install --upgrade pip
 
-# be sure it's 3.7 and not 3.6
-RUN ! ls /usr/local/bin/python3.7 && ls /usr/src/Python-3.7.3/python && cp /usr/src/Python-3.7.3/python /usr/local/bin/python3.7 ; exit 0
+# Setup the MongoDB data directory
+RUN mkdir -p /data/db
 
-# replace python version to have 3.7.3 as default
-RUN rm -f /usr/bin/python
-RUN rm -f /usr/bin/python3
-RUN ln -s /usr/local/bin/python3.7 /usr/bin/python
-RUN ln -s /usr/local/bin/python3.7 /usr/bin/python3
-RUN ln -s /usr/local/bin/python3.7 /usr/local/bin/python
-RUN ln -s /usr/local/bin/python3.7 /usr/local/bin/python3
+# Expose the default MongoDB port
+EXPOSE 27017
 
-# create links to pip3.7
-RUN ln -s /usr/local/bin/pip3.7 /usr/bin/pip
-RUN ln -s /usr/local/bin/pip3.7 /usr/bin/pip3
-RUN ln -s /usr/local/bin/pip3.7 /usr/local/bin/pip
-RUN ln -s /usr/local/bin/pip3.7 /usr/local/bin/pip3
+# Create the /NoSQL directory and set it as the working directory
+RUN mkdir -p /NoSQL
+WORKDIR /NoSQL
 
-# pycodestyle
-RUN pip3 install pycodestyle==2.5
+# Copy your application code and requirements.txt to the container
+COPY . /NoSQL
+RUN chmod -R 777 /NoSQL
 
-# MyPy
-RUN python3 -m pip install mypy
+# Start MongoDB in the background and keep the container running
+CMD mongod --fork --logpath /var/log/mongodb.log && tail -f /dev/null
 
-# SQLAlchemy
-RUN pip3 install SQLAlchemy
-RUN pip3 install sqlalchemy
-RUN pip3 install sqlalchemy --upgrade
-RUN pip3 install mysqlclient
-
-# Flask
-RUN pip3 install flask
-RUN pip3 install flask_babel
-RUN pip3 install flask-cors
-
-# pytz
-RUN pip3 install pytz
-
-# requests
-RUN pip3 install requests
-
-# beautifulsoup4
-RUN pip3 install beautifulsoup4
-
-# bcrypt
-#RUN pip3 install bcrypt
-
-# MySQL connector
-RUN pip3 install mysql-connector-python
-
-# parameterized
-RUN pip3 install parameterized
-
-# bs4
-RUN pip3 install bs4
-
-# W3C validator
-RUN curl -o "/usr/bin/w3c_validator.py" "https://raw.githubusercontent.com/holbertonschool/W3C-Validator/master/w3c_validator.py"
-RUN chmod u+x "/usr/bin/w3c_validator.py"
-RUN apt-get install -y tidy
-
-# Create test user
-RUN useradd -M correction_tester
-
-# Set the locale
-RUN apt-get install -y locales
-RUN locale-gen en_US.UTF-8
-ENV LANG en_US.UTF-8
-ENV LANGUAGE en_US:en
-ENV LC_ALL en_US.UTF-8
-
-# Create and set permissions for the /NoSQL directory
-RUN mkdir -p /NoSQL && \
-    chmod -R 777 /NoSQL
-
-# Keep the container running indef 
-CMD ["tail", "-f", "/dev/null"]
