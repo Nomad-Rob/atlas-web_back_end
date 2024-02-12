@@ -5,6 +5,7 @@
 from pymongo import MongoClient
 
 def main():
+    """ function that provides some stats about Nginx logs stored in MongoDB"""
     # Connect to the MongoDB database
     client = MongoClient('mongodb://localhost:27017/')
     db = client.logs
