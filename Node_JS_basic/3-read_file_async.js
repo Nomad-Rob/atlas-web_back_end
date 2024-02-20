@@ -5,13 +5,14 @@ const fs = require('fs').promises;
 async function countStudents(path) {
   try {
     const data = await fs.readFile(path, 'utf8');
-    const lines = data.split('\n');
-    const header = lines.slice(1);
+    // Split the data into lines and filter out any empty lines
+    // Then, slice from the 1st index to skip the header
+    const lines = data.split('\n').filter((line) => line.trim()).slice(1);
 
     let totalStudents = 0;
     const studentsByField = {};
 
-    for (const student of header) {
+    for (const student of lines) { // Use filtered 'lines' directly
       const fields = student.split(',');
       if (fields.length === 4) {
         const field = fields[3];
@@ -22,15 +23,19 @@ async function countStudents(path) {
         studentsByField[field].push(fields[0]);
       }
     }
+
     console.log(`Number of students: ${totalStudents}`);
-    console.log(studentsByField);
+    for (const field in studentsByField) {
+      if (Object.prototype.hasOwnProperty.call(studentsByField, field)) {
+        console.log(`Number of students in ${field}: ${studentsByField[field].length}. List: ${studentsByField[field].join(', ')}`);
+      }
+    }
 
     return {
       totalStudents,
       studentsByField,
     };
   } catch (error) {
-    console.error(error);
     throw new Error('Cannot load the database');
   }
 }
