@@ -1,45 +1,36 @@
+// Task 3 - Using db, create function countStudents in 3-read_file_async.js
+
 const fs = require('fs').promises;
 
 async function countStudents(path) {
   try {
-    // Attempt to read the file asynchronously
     const data = await fs.readFile(path, 'utf8');
+    const lines = data.split('\n');
+    const header = lines.slice(1);
 
-    // Split the file content by newline and filter out any empty lines
-    const lines = data.split('\n').filter(line => line.trim());
-
-    // Check if there's at least one line (excluding the header)
-    if (lines.length < 2) {
-      throw new Error('No students found in the database');
-    }
-
-    // Remove the header row
-    const students = lines.slice(1);
-
-    const studentsByField = {};
     let totalStudents = 0;
+    const studentsByField = {};
 
-    students.forEach(student => {
-      // Split each line by comma to extract student details
-      const [firstName,, , field] = student.split(',');
-      // Increment total students count
-      totalStudents++;
-
-      // Initialize the field array if it doesn't exist, then push the student's first name
-      if (!studentsByField[field]) {
-        studentsByField[field] = [];
+    for (const student of header) {
+      const fields = student.split(',');
+      if (fields.length === 4) {
+        const field = fields[3];
+        totalStudents += 1;
+        if (!studentsByField[field]) {
+          studentsByField[field] = [];
+        }
+        studentsByField[field].push(fields[0]);
       }
-      studentsByField[field].push(firstName);
-    });
-
+    }
     console.log(`Number of students: ${totalStudents}`);
-    Object.entries(studentsByField).forEach(([field, names]) => {
-      console.log(`Number of students in ${field}: ${names.length}. List: ${names.join(', ')}`);
-    });
+    console.log(studentsByField);
 
-    // Optionally return the results for further processing
-    return { totalStudents, studentsByField };
+    return {
+      totalStudents,
+      studentsByField,
+    };
   } catch (error) {
+    console.error(error);
     throw new Error('Cannot load the database');
   }
 }
