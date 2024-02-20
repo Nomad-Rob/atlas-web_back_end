@@ -23,6 +23,9 @@ At the end of this project, you are expected to be able to [explain to anyone](h
 - use ES6 with Node JS with Babel-node
 - use Nodemon to develop faster
 
+Testing fix 
+npx eslint (filename) --fix
+
 ---
 
 ## Requirements :heavy_check_mark::clipboard:
