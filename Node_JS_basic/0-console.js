@@ -1,8 +1,8 @@
 // Task 0 - Create a function named display Message that
 // prints in STDOUT the string arg
 
-function displayMessage(string) {
-  console.log(string);
-}
+const displayMessage = (message) => {
+  console.log(message);
+};
 
-module.exports = displayMessage;
+export default displayMessage;
