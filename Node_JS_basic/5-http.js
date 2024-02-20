@@ -1,29 +1,50 @@
 // Task 5 - create a small HTTP server using the http module
 
 const http = require('http');
-const countStudents = require('./3-read_file_async');
+const fs = require('fs');
 
-const databasePath = process.argv[2]; // Improve readability
-
-const app = http.createServer(async (req, res) => {
+const app = http.createServer((req, res) => {
   if (req.url === '/') {
-    res.writeHead(200, { 'Content-Type': 'text/plain' });
-    res.end('Hello Holberton School!');
+    res.write('Hello Holberton School!');
+    res.end();
   } else if (req.url === '/students') {
-    try {
-      const responseText = await countStudents(databasePath);
-      res.writeHead(200, { 'Content-Type': 'text/plain' });
-      res.end(`This is the list of our students\n${responseText}`);
-    } catch (error) {
-      res.writeHead(500, { 'Content-Type': 'text/plain' }); // Indicate server error
-      res.end(`This is the list of our students\n${error.message}`);
+    const path = process.argv[2];
+    if (!path) {
+      res.write('Cannot load the database');
+      res.end();
+      return;
     }
+
+    fs.readFile(path, 'utf-8', (err, data) => {
+      if (err) {
+        res.write('Cannot load the database');
+        res.end();
+        return;
+      }
+
+      const rows = data.split('\n').filter((row) => row); // Remove empty lines
+      // Assuming the first row is headers and should be skipped
+      const students = rows.slice(1);
+      const csStudentsList = [];
+      const sweStudentsList = [];
+
+      students.forEach((row) => {
+        const [name, , , field] = row.split(',');
+        if (field === 'CS') csStudentsList.push(name);
+        if (field === 'SWE') sweStudentsList.push(name);
+      });
+
+      const responseText = `This is the list of our students\nNumber of students: ${students.length}\n`
+        + `Number of students in CS: ${csStudentsList.length}. List: ${csStudentsList.join(', ')}\n`
+        + `Number of students in SWE: ${sweStudentsList.length}. List: ${sweStudentsList.join(', ')}`;
+      res.write(responseText);
+      res.end();
+    });
   } else {
-    res.writeHead(404, { 'Content-Type': 'text/plain' }); // Handle not found
+    res.writeHead(404);
     res.end();
   }
 });
 
 app.listen(1245);
-
 module.exports = app;
