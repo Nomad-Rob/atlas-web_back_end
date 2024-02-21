@@ -10,7 +10,8 @@ class StudentsController {
     // Read the database using the provided path in process.argv[2].
     readDatabase(process.argv[2])
       .then((data) => {
-        // Upon successful database read, send a 200 response with the student counts and names in CS and SWE.
+        // Upon successful database read, send a 200 response with the
+        // student counts and names in CS and SWE.
         res.status(200).send(`This is the list of our students
 Number of students in CS: ${data.CS.length}. List: ${data.CS.join(', ')}
 Number of students in SWE: ${data.SWE.length}. List: ${data.SWE.join(', ')}`);

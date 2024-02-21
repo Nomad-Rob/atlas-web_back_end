@@ -20,5 +20,6 @@ app.use(routes);
 app.listen(1245);
 
 // Export the app instance for potential use in other files, such as for testing.
-// This makes it easier to import the app in test suites or when integrating with other services.
+// This makes it easier to import the app in test suites or when integrating
+// with other services.
 export default app;
