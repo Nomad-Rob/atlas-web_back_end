@@ -17,7 +17,8 @@ router.get('/', AppController.getHomepage);
 // the getAllStudents method of StudentsController is called to return all students' data.
 router.get('/students', StudentsController.getAllStudents);
 
-// Define a route for fetching students by their major. When a GET request is made to '/students/:major',
+// Define a route for fetching students by their major. When a GET request
+// is made to '/students/:major',
 // the getAllStudentsByMajor method of StudentsController is used.
 // This allows for filtering students based on the major specified in the URL parameter.
 router.get('/students/:major', StudentsController.getAllStudentsByMajor);
