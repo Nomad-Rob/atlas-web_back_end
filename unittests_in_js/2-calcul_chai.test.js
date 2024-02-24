@@ -1,45 +1,46 @@
-// Task 2 - Test using Chai assertion library
+// Task 2 - Test using Chai expection library
 
-const assert = require('assert');
-const calculateNumber = require('./1-calcul');
+const expect = require('chai').expect;
+const calculateNumber = require('./2-calcul_chai');
 
 describe('calculateNumber', function() {
   describe('SUM', function() {
     it('should return the sum of two rounded numbers', function() {
-      assert.strictEqual(calculateNumber('SUM', 1.4, 4.5), 6);
+      expect(calculateNumber('SUM', 1.4, 4.5)).to.equal(6);
     });
   });
 
   describe('SUBTRACT', function() {
     it('should return the result of subtracting the second rounded number from the first', function() {
-      assert.strictEqual(calculateNumber('SUBTRACT', 1.4, 4.5), -4);
+      expect(calculateNumber('SUBTRACT', 1.4, 4.5)).to.equal(-4);
     });
   });
 
   describe('DIVIDE', function() {
     it('should return the result of dividing the first rounded number by the second', function() {
-      assert.strictEqual(calculateNumber('DIVIDE', 1.4, 4.5), 0.2);
+      expect(calculateNumber('DIVIDE', 1.4, 4.5)).to.equal(0.2);
     });
 
     it('should return "Error" when attempting to divide by 0', function() {
-      assert.strictEqual(calculateNumber('DIVIDE', 1.4, 0), 'Error');
+      expect(calculateNumber('DIVIDE', 1.4, 0)).to.equal('Error');
     });
   });
 
   // Additional edge cases and error handling
   describe('Edge Cases and Error Handling', function() {
+    // Uncomment and adjust these tests based on your actual implementation
     // it('should throw an error for invalid operation types', function() {
-    //   assert.throws(() => calculateNumber('INVALID_TYPE', 1.4, 4.5), { message: 'Invalid operation type' });
+    //   expect(() => calculateNumber('INVALID_TYPE', 1.4, 4.5)).to.throw('Invalid operation type');
     // });
 
     // it('should handle negative numbers correctly', function() {
-    //   assert.strictEqual(calculateNumber('SUM', -1.4, -2.5), -4);
-    //   assert.strictEqual(calculateNumber('SUBTRACT', -1.4, 2.5), -4);
+    //   expect.strictEqual(calculateNumber('SUM', -1.4, -2.5), -4);
+    //   expect.strictEqual(calculateNumber('SUBTRACT', -1.4, 2.5), -4);
     // });
 
     it('should round half towards positive infinity', function() {
-      assert.strictEqual(calculateNumber('SUM', 1.5, 2.5), 5);
-      assert.strictEqual(calculateNumber('SUBTRACT', 2.5, 1.5), 1);
+      expect(calculateNumber('SUM', 1.5, 2.5)).to.equal(5);
+      expect(calculateNumber('SUBTRACT', 2.5, 1.5)).to.equal(1);
     });
   });
 });
