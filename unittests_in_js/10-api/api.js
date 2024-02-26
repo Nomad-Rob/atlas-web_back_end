@@ -3,21 +3,19 @@
 const express = require('express');
 const app = express();
 
-// Middleware to parse JSON bodies
 app.use(express.json());
 
-// Route for the index page
-app.get('/', (req, res) => res.send('Welcome to the payment system'));
-
-// Route for cart items, using a regex to ensure id is a number
-app.get('/cart/:id(\\d+)', (req, res) => {
-    const { id } = req.params;
-    res.send(`Payment methods for cart ${id}`);
+app.get('/', (req, res) => {
+    res.status(200).send('Welcome to the payment system');
 });
 
-// Route for available payments
+app.get('/cart/:id(\\d+)', (req, res) => {
+    const idToSend = req.params.id;
+    res.status(200).send(`Payment methods for cart ${idToSend}`);
+});
+
 app.get('/available_payments', (req, res) => {
-    res.json({
+    res.status(200).json({
         payment_methods: {
             credit_cards: true,
             paypal: false
@@ -25,11 +23,13 @@ app.get('/available_payments', (req, res) => {
     });
 });
 
-// Route for user login
 app.post('/login', (req, res) => {
-    const { userName } = req.body;
-    res.send(`Welcome ${userName}`);
+    const userName = req.body.userName;
+    res.status(200).send(`Welcome ${userName}`);
 });
 
-// Start the server
-app.listen(7865, () => console.log('API available on localhost port 7865'));
+app.listen(7865, () => {
+    console.log('API available on localhost port 7865');
+});
+
+module.exports = app;
