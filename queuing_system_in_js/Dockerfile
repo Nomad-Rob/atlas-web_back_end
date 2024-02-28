@@ -17,6 +17,7 @@ RUN apt-get update && apt-get install -y nodejs
 
 # Install redis server and the redis client
 RUN apt-get -y install redis-server
+RUN npm install redis
 
 RUN sed -i "s/bind .*/bind 127.0.0.1/g" /etc/redis/redis.conf
 

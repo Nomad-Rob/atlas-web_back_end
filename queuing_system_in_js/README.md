@@ -27,6 +27,15 @@ At the end of this project, you are expected to be able to [explain to anyone](h
 - A `README.md` file, at the root of the folder of the project, is mandatory
 - Your code should use the `js` extension
 
+## Some errors to get redis working
+I had to do the following 
+npm install --save-dev @babel/node @babel/preset-env
+npm install --save-dev @babel/core @babel/node @babel/preset-env
+npm list @babel/core @babel/node @babel/preset-env
+
+
+
+
 ## Required Files for the Project :page_facing_up:
 ### package.json
 
